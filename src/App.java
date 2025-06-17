@@ -14,5 +14,7 @@ public class App {
         ab.print();
         System.out.println();
         ab.printPre();
+        System.out.println();
+        System.out.println(ab.buscar(14) ? "El valor fue encontrado." : "El valor no fue encontrado.");
     }
 }

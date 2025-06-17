@@ -56,12 +56,21 @@ public class ArbolBinario {
         }
     }
 
-    private boolean buscar(int value){
-
+    public boolean buscar(int value){
+        return buscarRec(root, value) != null;
     }
 
     private Node buscarRec(Node ref, int value){
-        
-
+        if(ref != null){
+            if (ref.getValor() == value){
+                return ref;
+            }
+            if (ref.getValor() > value){
+                return buscarRec(ref.getIzquierdo(), value);
+            } else {
+                return buscarRec(ref.getDerecho(), value);
+            }
+        }
+        return null;
     }
 }
