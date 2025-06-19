@@ -39,6 +39,8 @@ public class App {
         System.out.println("Arbol InOrden con factores de equilibrio");
         ab.factorEquilibrio();
         System.out.println();
+                System.out.println("Arbol esta equilibrado: " + ab.isEquilibrado());
+
         System.out.println("Nodos desequilibrados:");
         ab.printNodosDesequilibrados();
 

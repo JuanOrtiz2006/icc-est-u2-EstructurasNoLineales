@@ -10,6 +10,7 @@ public class ArbolBinario {
 
     public ArbolBinario(){
         this.root=null;
+        this.equilibrado = true;
     }
 
     public void insert(int value){
@@ -126,8 +127,6 @@ public class ArbolBinario {
             if (factor < -1 || factor > 1) {
                 equilibrado = false;
                 nodosDes.add(node);
-            } else {
-                equilibrado = true;
             }
             System.out.print(node.getValor() + " eq:" + factor + ", ");
             factorEquilibrioRec(node.getDerecho());
