@@ -1,7 +1,12 @@
 package materia.controllers;
 import materia.models.*;
+import java.util.ArrayList;
+import java.util.List;
 public class ArbolBinario {
     private Node root;
+    private int pesoArbol;
+    private boolean equilibrado;
+    List<Node> nodosDes = new ArrayList<>();
 
     public ArbolBinario(){
         this.root=null;
@@ -9,11 +14,11 @@ public class ArbolBinario {
 
     public void insert(int value){
         root = insertRec(root,value);
-        
     }
 
     private Node insertRec(Node ref, int value){
         if (ref==null){
+            pesoArbol++;
             return new Node(value); 
         }
 
@@ -31,15 +36,15 @@ public class ArbolBinario {
         return root==null;
     }
 
-    public void print(){
-        imprimir(root);
+    public void printOrden(){
+        imprimirInOrden(root);
     }
 
-    private void imprimir(Node node){
+    private void imprimirInOrden(Node node){
         if (node != null) {
-            imprimir(node.getIzquierdo());
+            imprimirInOrden(node.getIzquierdo());
              System.out.print(node.getValor() + " ");
-            imprimir(node.getDerecho());
+            imprimirInOrden(node.getDerecho());
         }
         
     }
@@ -72,5 +77,70 @@ public class ArbolBinario {
             }
         }
         return null;
+    }
+
+    public int getHeight(){
+        
+        return getHeightRec(root);
+    }
+
+    private int getHeightRec(Node node){
+        if(node == null){
+            return 0;
+        }
+
+        int leftHeight = getHeightRec(node.getIzquierdo());
+        int rightHeight = getHeightRec(node.getDerecho());
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    public int getPeso(){
+        return pesoArbol;
+    }
+
+    public void getAlturas(){
+        
+        getAlturasRec(root);
+    }
+
+    private void getAlturasRec(Node node){
+        int altura;
+        if (node != null){
+            altura = getHeightRec(node);
+            getAlturasRec(node.getIzquierdo());
+            System.out.print(node.getValor() + " h:" + altura + ", ");
+            getAlturasRec(node.getDerecho());
+        } 
+    }
+
+    public void factorEquilibrio(){
+        factorEquilibrioRec(root);
+    }
+
+    private void factorEquilibrioRec(Node node){
+        if (node != null) {
+            int alturaIzq = getHeightRec(node.getIzquierdo());
+            int alturaDer = getHeightRec(node.getDerecho());
+            int factor = alturaIzq - alturaDer;
+            factorEquilibrioRec(node.getIzquierdo());
+            if (factor < -1 || factor > 1) {
+                equilibrado = false;
+                nodosDes.add(node);
+            } else {
+                equilibrado = true;
+            }
+            System.out.print(node.getValor() + " eq:" + factor + ", ");
+            factorEquilibrioRec(node.getDerecho());
+        }
+    }
+
+    public boolean isEquilibrado() {
+        return equilibrado;
+    }
+
+    public void printNodosDesequilibrados() {
+        for (Node node : nodosDes) {
+            System.out.print(node.getValor() + " eq:" + (getHeightRec(node.getIzquierdo()) - getHeightRec(node.getDerecho())) + ", ");
+        }
     }
 }
